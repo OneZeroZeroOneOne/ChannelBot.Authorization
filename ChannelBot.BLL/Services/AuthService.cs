@@ -22,10 +22,10 @@ namespace ChannelBot.BLL.Services
 
         async public Task<ClaimsIdentity> GetIdentity(string login, string password)
         {
-            Admin admin = await _context.Admin.FirstOrDefaultAsync(x => x.Login == login);
-            if (admin == null || admin.Login != login || admin.Password != password)
+            Admin admin = await _context.Admin.FirstOrDefaultAsync(x => x.Email == login);
+            if (admin == null || admin.Email != login || admin.Password != password)
             {
-                throw new Exception("invalid login or password");
+                throw new Exception("invalid email or password");
             }
             var claims = new List<Claim>
             {

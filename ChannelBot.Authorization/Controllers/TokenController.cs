@@ -22,16 +22,16 @@ namespace ChannelBot.Authorization.Controllers
         }
 
         [HttpGet]
-        async public Task<ResponceAuthModel> Get(string login, string password)
+        async public Task<ResponceAuthModel> Get(string email, string password)
         {
 
-            var identity = await _authService.GetIdentity(login, password);
+            var identity = await _authService.GetIdentity(email, password);
 
             var encodedJwt = _authService.GenerateToken(identity);
 
             return new ResponceAuthModel
             {
-                Login = login,
+                Login = email,
                 Token = encodedJwt,
             };
         }
