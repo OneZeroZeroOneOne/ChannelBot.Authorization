@@ -14,7 +14,6 @@ namespace ChannelBot.DAL.Contexts
         {
             _connString = connString;
         }
-
         public virtual DbSet<Admin> Admin { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
