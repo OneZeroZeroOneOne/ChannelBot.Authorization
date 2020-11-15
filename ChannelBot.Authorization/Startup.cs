@@ -63,6 +63,9 @@ namespace ChannelBot.Authorization
 
             app.UseRouting();
 
+            app.UseCors(x => x.AllowAnyOrigin());
+
+            app.UseCors(x => x.AllowAnyHeader());
 
             app.UseAuthorization();
 
