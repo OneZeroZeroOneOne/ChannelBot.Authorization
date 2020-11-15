@@ -1,0 +1,36 @@
+name: Deploy ChannetBotAuthorization
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2.0.0
+
+      - name: setup .net core
+        uses: actions/setup-dotnet@v1.4.0
+        with:
+          dotnet-version: 3.1.100
+          
+      - name: install lambda tools
+        run: dotnet tool install -g Amazon.Lambda.Tools
+
+      - name: build
+        run: dotnet lambda package --msbuild-parameters "/p:PublishReadyToRun=true --self-contained false"
+        working-directory: ChannelBot.Authorization
+
+      - name: aws login
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+          
+      - name: Deploy
+        uses: docker://glassechidna/stackit
+        with:
+          args: stackit up --stack-name ChannelBotAuthorization --template serverless.yml
