@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ChannelBot.BLL\ChannelBot.BLL.csproj" />
     <ProjectReference Include="..\ChannelBot.DAL\ChannelBot.DAL.csproj" />
+    <ProjectReference Include="..\ChannelBot.Utilities\ChannelBot.Utilities.csproj" />
   </ItemGroup>
 
 

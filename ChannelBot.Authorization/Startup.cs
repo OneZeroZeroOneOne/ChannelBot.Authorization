@@ -6,6 +6,7 @@ using ChannelBot.BLL.Abstractions;
 using ChannelBot.BLL.Options;
 using ChannelBot.BLL.Services;
 using ChannelBot.DAL.Contexts;
+using ChannelBot.Utilities.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -51,6 +52,8 @@ namespace ChannelBot.Authorization
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseHttpsRedirection();
 

@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using ChannelBot.BLL.Options;
 using Microsoft.IdentityModel.Tokens;
 using ChannelBot.BLL.Abstractions;
+using ChannelBot.Utilities.Exceptions;
+
 
 namespace ChannelBot.BLL.Services
 {
@@ -25,7 +27,7 @@ namespace ChannelBot.BLL.Services
             Admin admin = await _context.Admin.FirstOrDefaultAsync(x => x.Email == login);
             if (admin == null || admin.Email != login || admin.Password != password)
             {
-                throw new Exception("invalid email or password");
+                throw ExceptionFactory.SoftException(ExceptionEnum.InvalidCredentials, "invalid email or password");
             }
             var claims = new List<Claim>
             {
@@ -46,7 +48,6 @@ namespace ChannelBot.BLL.Services
                 claims: claims.Claims,
                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
                 signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            JwtSecurityTokenHandler a = new JwtSecurityTokenHandler();
             return "Bearer " + new JwtSecurityTokenHandler().WriteToken(jwt);
         }
     }
