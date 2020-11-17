@@ -7,11 +7,18 @@ namespace ChannelBot.BLL.Options
 {
     public class AuthOptions
     {
-        public const string ISSUER = "MyAuthServer"; // издатель токена
-        public const string AUDIENCE = "MyAuthClient"; // потребитель токена
-        const string KEY = "mysupersecret_secretkey!123";   // ключ для шифрации
+        public string ISSUER; // издатель токена
+        public string AUDIENCE; // потребитель токена
+        public string KEY;   // ключ для шифрации
         public const int LIFETIME = 1; // время жизни токена - 1 минута
-        public static SymmetricSecurityKey GetSymmetricSecurityKey()
+
+        public AuthOptions(string key, string issuer, string audience)
+        {
+            ISSUER = issuer;
+            AUDIENCE = audience;
+            KEY = key;
+        }
+        public SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
         }

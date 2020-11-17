@@ -6,6 +6,7 @@ using ChannelBot.BLL.Abstractions;
 using ChannelBot.BLL.Options;
 using ChannelBot.BLL.Services;
 using ChannelBot.DAL.Contexts;
+using ChannelBot.DAL.Models;
 using ChannelBot.Utilities.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,14 +34,21 @@ namespace ChannelBot.Authorization
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-
-            services.AddTransient<IAuthService, AuthService>();
-
+            
             services.AddTransient(x =>
             {
                 return new MainContext("Host=95.214.9.14;Database=postgres;Username=postgres;Password=123456rtyu");
             });
+
+
+            MainContext context = new MainContext("Host=95.214.9.14;Database=postgres;Username=postgres;Password=123456rtyu");
+
+            JwtOption jwtOption = context.JwtOption.FirstOrDefault();
+
+            services.AddSingleton(new AuthOptions(jwtOption.Key, jwtOption.Issuer, jwtOption.Audience));
+
+            services.AddTransient<IAuthService, AuthService>();
+
 
             services.AddSwaggerGen();
         }

@@ -17,9 +17,11 @@ namespace ChannelBot.BLL.Services
     public class AuthService: IAuthService
     {
         private MainContext _context;
-        public AuthService(MainContext context)
+        private AuthOptions _authOption;
+        public AuthService(MainContext context, AuthOptions authOption)
         {
             _context = context;
+            _authOption = authOption;
         }
 
         async public Task<ClaimsIdentity> GetIdentity(string login, string password)
@@ -42,12 +44,12 @@ namespace ChannelBot.BLL.Services
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.ISSUER,
-                audience: AuthOptions.AUDIENCE,
+                issuer: _authOption.ISSUER,
+                audience: _authOption.AUDIENCE,
                 notBefore: now,
                 claims: claims.Claims,
                 expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                signingCredentials: new SigningCredentials(_authOption.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             return "Bearer " + new JwtSecurityTokenHandler().WriteToken(jwt);
         }
     }

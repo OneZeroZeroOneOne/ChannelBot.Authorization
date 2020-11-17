@@ -31,7 +31,6 @@ namespace ChannelBot.Authorization.Controllers
 
             return new ResponceAuthModel
             {
-                Login = email,
                 Token = encodedJwt,
             };
         }
