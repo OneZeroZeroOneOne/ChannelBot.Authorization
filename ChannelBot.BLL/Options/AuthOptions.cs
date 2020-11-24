@@ -10,7 +10,7 @@ namespace ChannelBot.BLL.Options
         public string ISSUER; // издатель токена
         public string AUDIENCE; // потребитель токена
         public string KEY;   // ключ для шифрации
-        public const int LIFETIME = 1; // время жизни токена - 1 минута
+        public const int LIFETIME = 60; // время жизни токена - 1 минута
 
         public AuthOptions(string key, string issuer, string audience)
         {
