@@ -34,7 +34,7 @@ namespace ChannelBot.BLL.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, admin.Id.ToString()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, "admin"),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, "1"),
             };
             return new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
         }
