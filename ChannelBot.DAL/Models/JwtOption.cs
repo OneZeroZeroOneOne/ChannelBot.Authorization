@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ChannelBot.DAL.Models
 {
-    public class JwtOption
+    public partial class JwtOption
     {
         public string Issuer { get; set; }
         public string Audience { get; set; }
