@@ -34,8 +34,8 @@ namespace ChannelBot.Authorization
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            string datebaseconnectionstring = "Host=185.87.48.116;Database=postgres;Username=postgres;Password=123123AAA";
-            //string datebaseconnectionstring = Environment.GetEnvironmentVariable("datebaseconnectionstring");
+            //string datebaseconnectionstring = "Host=185.87.48.116;Database=postgres;Username=postgres;Password=123123AAA";
+            string datebaseconnectionstring = Environment.GetEnvironmentVariable("datebaseconnectionstring");
             services.AddTransient(x =>
             {
                 return new MainContext(datebaseconnectionstring);
